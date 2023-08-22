@@ -2,7 +2,8 @@
 #define CPU
 #include <cstdint>
 #include <fmt/core.h>
-
+#include "Instructions.h"
+#include <vector>
 struct StatusRegister {
     using Flags = std::uint8_t;
     Flags flags{}
@@ -35,15 +36,21 @@ struct StatusRegister {
     bool isSet(const FlagBits& Mask);
 };
 
-class cpu {
+struct cpu {
     
   public:
+    Instructions instr;
     StatusRegister Statusreg{};
     std::uint8_t accuReg{};
     std::uint8_t xReg{};
     std::uint8_t yReg{};
     std::uint16_t pc{};
     std::uint8_t sp{};
+    std::vector<std::uint8_t> memory{};
+
+    std::uint8_t readByte();
+    std::uint16_t readWord();
+
     cpu();
     ~cpu();
 };
