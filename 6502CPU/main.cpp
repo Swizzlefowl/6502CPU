@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fmt/core.h>
-
+#include "CPU.h"
 int main() {
-    fmt::println("{}", 10);
+    
 }
