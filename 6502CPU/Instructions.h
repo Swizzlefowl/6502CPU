@@ -28,4 +28,10 @@ struct Instructions {
 
     //ADC - Add with Carry
     void opAdc(AddrMode addr);
+
+    // AND - Logical AND
+    void opAnd(AddrMode addr);
+    
 };
+
+

@@ -136,6 +136,7 @@
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Instructions.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -143,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Instructions.h" />
+    <ClInclude Include="UnitTests.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
