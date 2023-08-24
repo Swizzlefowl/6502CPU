@@ -23,7 +23,9 @@ struct Instructions {
     ~Instructions();
     cpu& m_cpu;
 
-    std::uint16_t fetchArgumentadress(AddrMode addr);
+    std::uint16_t fetchArgumentadress(AddrMode addrMode);
+    std::uint8_t fetchArgument(AddrMode adress);
+
     //ADC - Add with Carry
     void opAdc(AddrMode addr);
 };

@@ -10,9 +10,9 @@ Instructions::Instructions(cpu& cpu)
 Instructions::~Instructions() {
 }
 
-std::uint16_t Instructions::fetchArgumentadress(AddrMode addr) {
+std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
     auto instrAfterOp = m_cpu.pc + 1;
-    switch (addr) {
+    switch (addrMode) {
         case Instructions::Implied:
             return 0;
             break;
@@ -23,9 +23,13 @@ std::uint16_t Instructions::fetchArgumentadress(AddrMode addr) {
             return instrAfterOp;
             break;
         case Instructions::Relative:{
-            auto rel = m_cpu.readByte(instrAfterOp);
-            if (rel & 0x80)
-                 return rel |= 0xff00;
+            std::uint16_t rel = m_cpu.readByte(instrAfterOp);
+            std::int16_t offset{};
+            if (rel & StatusRegister::Negative) {
+                offset = rel | 0xff00;
+                return m_cpu.pc + offset;
+            } else
+                return m_cpu.pc + rel;
         }
             break;
         case Instructions::IndirectX:{
@@ -76,6 +80,11 @@ std::uint16_t Instructions::fetchArgumentadress(AddrMode addr) {
             return 0;
             break;
     }
+}
+
+std::uint8_t Instructions::fetchArgument(AddrMode addrMode) {
+    auto address = fetchArgumentadress(addrMode);
+    m_cpu.readByte(address);
 }
 
 void Instructions::opAdc(AddrMode addr) {
