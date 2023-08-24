@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <fmt/core.h>
 #include "Instructions.h"
-#include <vector>
+#include <array>
 struct StatusRegister {
     using Flags = std::uint8_t;
     Flags flags{}
@@ -46,10 +46,10 @@ struct cpu {
     std::uint8_t yReg{};
     std::uint16_t pc{};
     std::uint8_t sp{};
-    std::vector<std::uint8_t> memory{};
+    std::array<std::uint8_t, 0xffff> memory{};
 
-    std::uint8_t readByte();
-    std::uint16_t readWord();
+    std::uint8_t readByte(std::uint16_t adress);
+    std::uint16_t readWord(std::uint16_t adress);
 
     cpu();
     ~cpu();

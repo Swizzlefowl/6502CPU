@@ -1,17 +1,21 @@
 #include "CPU.h"
-std::uint8_t cpu::readByte() {
-    return memory[pc];
+
+// reads an uint8 byte from cpu memory
+std::uint8_t cpu::readByte(std::uint16_t adress) {
+    return memory[adress];
 }
-std::uint16_t cpu::readWord() {
+
+// reads an uint16 word from cpu memory
+std::uint16_t cpu::readWord(std::uint16_t adress) {
     std::uint16_t loByte{};
     std::uint16_t HiByte{};
-    loByte = readByte();
-    fmt::println("{}", loByte);
-    pc++;
-    HiByte = (readByte() << 8);
-    fmt::println("{}", HiByte);
+
+    loByte = readByte(adress);
+    HiByte = (readByte(adress + 1) << 8);
+
     return HiByte | loByte;
 }
+
 cpu::cpu()
     : instr{*this} {
    
