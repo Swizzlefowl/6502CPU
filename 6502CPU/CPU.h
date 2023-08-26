@@ -52,6 +52,9 @@ struct cpu {
     std::uint8_t readByte(std::uint16_t adress);
     std::uint16_t readWord(std::uint16_t adress);
 
+    void writeByte(std::uint16_t adress, std::uint8_t val);
+    void writeWord(std::uint16_t adress, std::uint16_t val);
+
     // fn to push a byte into the stack
     void pushByte(std::uint8_t value);
 

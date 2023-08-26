@@ -7,13 +7,25 @@ std::uint8_t cpu::readByte(std::uint16_t adress) {
 
 // reads an uint16 word from cpu memory
 std::uint16_t cpu::readWord(std::uint16_t adress) {
-    std::uint16_t loByte{};
+    std::uint16_t LoByte{};
     std::uint16_t HiByte{};
 
-    loByte = readByte(adress);
+    LoByte = readByte(adress);
     HiByte = (readByte(adress + 1) << 8);
 
-    return HiByte | loByte;
+    return HiByte | LoByte;
+}
+
+void cpu::writeByte(std::uint16_t adress, std::uint8_t val) {
+    this->memory[adress] = val;
+}
+
+void cpu::writeWord(std::uint16_t adress, std::uint16_t val) {
+    std::uint8_t LoByte = static_cast<uint8_t>(val >> 8);
+    std::uint8_t HiByte = static_cast<uint8_t> (val & 0x00ff);
+
+    writeByte(adress, LoByte);
+    writeByte(adress + 1, HiByte);
 }
 
 void cpu::pushByte(std::uint8_t value) {
@@ -25,14 +37,14 @@ void cpu::pushByte(std::uint8_t value) {
 
 std::uint8_t cpu::popByte() {
     sp++;
-    auto value = this->memory[sp];
+    std::uint8_t value = static_cast<std::uint8_t>(this->memory[sp]);
 
     return value;
 }
 
 void cpu::pushWord(std::uint16_t value) {
-    std::uint8_t LoByte = value >> 8;
-    std::uint8_t HiByte = (value & 0x00ff);
+    std::uint8_t LoByte = static_cast<uint8_t>(value >> 8);
+    std::uint8_t HiByte = static_cast<uint8_t>(value & 0x00ff);
 
     pushByte(HiByte);
     pushByte(LoByte);
@@ -68,21 +80,52 @@ void cpu::execute(std::uint8_t opcode) {
         case 0x69:
             printCPUState("ADC");
             instr.opAdc(Instructions::Immediate);
-            pc += 2;
+            pc += 2; // instruction length
             printCPUState("ADC");
             break;
         case 0x65:
             printCPUState("ADC");
             instr.opAdc(Instructions::ZeroPage);
-            pc += 2;
+            pc += 2; // instruction length
             printCPUState("ADC");
             break;
         case 0x75:
             printCPUState("ADC");
             instr.opAdc(Instructions::ZeroPageX);
-            pc += 2;
+            pc += 2; // instruction length
             printCPUState("ADC");
+            break;
+        case 0x6D:
+            printCPUState("ADC");
+            instr.opAdc(Instructions::Absolute);
+            pc += 3; // instruction length
+            printCPUState("ADC");
+            break;
+        case 0x7D:
+            printCPUState("ADC");
+            instr.opAdc(Instructions::AbsoluteX);
+            pc += 3; // instruction length
+            printCPUState("ADC");
+        case 0x79:
+            printCPUState("ADC");
+            instr.opAdc(Instructions::AbsoluteY);
+            pc += 3; // instruction length
+            printCPUState("ADC");
+            break;
+        case 0x61:
+            printCPUState("ADC");
+            instr.opAdc(Instructions::IndirectX);
+            pc += 2; // instruction length
+            printCPUState("ADC");
+            break;
+        case 0x71:
+            printCPUState("ADC");
+            instr.opAdc(Instructions::IndirectY);
+            pc += 2; // instruction length
+            printCPUState("ADC");
+            break;
         default:
+            throw std::exception("Unimplemented opcode!");
             break;
     }
 }
