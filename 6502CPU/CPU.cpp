@@ -16,6 +16,35 @@ std::uint16_t cpu::readWord(std::uint16_t adress) {
     return HiByte | loByte;
 }
 
+void cpu::pushByte(std::uint8_t value) {
+    this->memory[sp] = value;
+    --sp;
+
+    return;
+}
+
+std::uint8_t cpu::popByte() {
+    sp++;
+    auto value = this->memory[sp];
+
+    return value;
+}
+
+void cpu::pushWord(std::uint16_t value) {
+    std::uint8_t LoByte = value >> 8;
+    std::uint8_t HiByte = (value & 0x00ff);
+
+    pushByte(HiByte);
+    pushByte(LoByte);
+}
+
+std::uint16_t cpu::popWord() {
+    std::uint16_t LoByte = popByte();
+    std::uint16_t HiByte = popByte();
+
+    return (HiByte << 8) | LoByte;
+}
+
 cpu::cpu()
     : instr{*this} {
    
@@ -23,6 +52,39 @@ cpu::cpu()
 
 cpu::~cpu() {
 
+}
+
+void cpu::printCPUState() {
+    fmt::println("PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", pc, sp, AReg, XReg, YReg);
+}
+
+void cpu::tick() {
+    auto opcode = this->readByte(pc);
+    decodeInstructions(opcode);
+}
+
+void cpu::decodeInstructions(std::uint8_t opcode) {
+    switch (opcode) {
+        case 0x69:
+            printCPUState();
+            instr.opAdc(Instructions::Immediate);
+            pc += 2;
+            printCPUState();
+            break;
+        case 0x65:
+            printCPUState();
+            instr.opAdc(Instructions::ZeroPage);
+            pc += 2;
+            printCPUState();
+            break;
+        case 0x75:
+            printCPUState();
+            instr.opAdc(Instructions::ZeroPageX);
+            pc += 2;
+            printCPUState();
+        default:
+            break;
+    }
 }
 
 void StatusRegister::set(const FlagBits& Mask) {

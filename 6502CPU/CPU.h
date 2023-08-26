@@ -46,13 +46,29 @@ struct cpu {
     std::uint8_t YReg{};
     std::uint16_t pc{};
     std::uint8_t sp{};
-    std::vector<std::uint8_t> memory{};
+    std::vector<char> memory{};
 
     std::uint8_t readByte(std::uint16_t adress);
     std::uint16_t readWord(std::uint16_t adress);
 
+    // fn to push a byte into the stack
+    void pushByte(std::uint8_t value);
+
+    // fn to pop a byte into the stack
+    std::uint8_t popByte();
+
+    // fn to push a word into the stack
+    void pushWord(std::uint16_t value);
+
+    // fn to pop a word into the stack
+    std::uint16_t popWord();
+
     cpu();
     ~cpu();
+
+    void printCPUState();
+    void tick();
+    void decodeInstructions(std::uint8_t opcode);
 };
 
 #endif // !CPU
