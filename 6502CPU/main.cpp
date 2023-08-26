@@ -21,7 +21,7 @@ int main() {
     file.read(cpu.memory.data(), fileSize);
 
     for (auto& word : cpu.memory) {
-        cpu.printCPUState();
+        cpu.printCPUState("ADC");
     }
     while (true) {
         cpu.tick();

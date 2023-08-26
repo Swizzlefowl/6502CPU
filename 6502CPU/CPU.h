@@ -4,6 +4,7 @@
 #include <fmt/core.h>
 #include "Instructions.h"
 #include <vector>
+#include <string_view>
 struct StatusRegister {
     using Flags = std::uint8_t;
     Flags flags{}
@@ -66,9 +67,9 @@ struct cpu {
     cpu();
     ~cpu();
 
-    void printCPUState();
+    void printCPUState(const std::string_view& opName);
     void tick();
-    void decodeInstructions(std::uint8_t opcode);
+    void execute(std::uint8_t opcode);
 };
 
 #endif // !CPU

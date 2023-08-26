@@ -54,34 +54,34 @@ cpu::~cpu() {
 
 }
 
-void cpu::printCPUState() {
-    fmt::println("PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", pc, sp, AReg, XReg, YReg);
+void cpu::printCPUState(const std::string_view& opName) {
+    fmt::println("{} PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", opName, pc, sp, AReg, XReg, YReg);
 }
 
 void cpu::tick() {
     auto opcode = this->readByte(pc);
-    decodeInstructions(opcode);
+    execute(opcode);
 }
 
-void cpu::decodeInstructions(std::uint8_t opcode) {
+void cpu::execute(std::uint8_t opcode) {
     switch (opcode) {
         case 0x69:
-            printCPUState();
+            printCPUState("ADC");
             instr.opAdc(Instructions::Immediate);
             pc += 2;
-            printCPUState();
+            printCPUState("ADC");
             break;
         case 0x65:
-            printCPUState();
+            printCPUState("ADC");
             instr.opAdc(Instructions::ZeroPage);
             pc += 2;
-            printCPUState();
+            printCPUState("ADC");
             break;
         case 0x75:
-            printCPUState();
+            printCPUState("ADC");
             instr.opAdc(Instructions::ZeroPageX);
             pc += 2;
-            printCPUState();
+            printCPUState("ADC");
         default:
             break;
     }
