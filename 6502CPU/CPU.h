@@ -70,7 +70,7 @@ struct cpu {
     cpu();
     ~cpu();
 
-    void printCPUState(const std::string_view& opName);
+    void printCPUState(const std::string_view& opName, std::uint8_t opcode);
     void tick();
     void execute(std::uint8_t opcode);
 };

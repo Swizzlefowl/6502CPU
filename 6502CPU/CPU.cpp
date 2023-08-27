@@ -68,8 +68,8 @@ cpu::~cpu() {
 
 }
 
-void cpu::printCPUState(const std::string_view& opName) {
-    fmt::println("{} PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", opName, pc, sp, AReg, XReg, YReg);
+void cpu::printCPUState(const std::string_view& opName, std::uint8_t opcode) {
+    fmt::println("{}:{:0x} PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", opName, opcode, pc, sp, AReg, XReg, YReg);
 }
 
 void cpu::tick() {
@@ -80,87 +80,87 @@ void cpu::tick() {
 void cpu::execute(std::uint8_t opcode) {
     switch (opcode) {
         case 0x69:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x69);
             instr.opAdc(Instructions::Immediate);
             pc += 2; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x69);
             break;
         case 0x65:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x65);
             instr.opAdc(Instructions::ZeroPage);
             pc += 2; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x65);
             break;
         case 0x75:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x75);
             instr.opAdc(Instructions::ZeroPageX);
             pc += 2; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x75);
             break;
         case 0x6D:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x6D);
             instr.opAdc(Instructions::Absolute);
             pc += 3; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x6D);
             break;
         case 0x7D:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x7D);
             instr.opAdc(Instructions::AbsoluteX);
             pc += 3; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x7D);
         case 0x79:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x79);
             instr.opAdc(Instructions::AbsoluteY);
             pc += 3; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x79);
             break;
         case 0x61:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x61);
             instr.opAdc(Instructions::IndirectX);
             pc += 2; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x61);
             break;
         case 0x71:
-            printCPUState("ADC");
+            printCPUState("ADC", 0x71);
             instr.opAdc(Instructions::IndirectY);
             pc += 2; // instruction length
-            printCPUState("ADC");
+            printCPUState("ADC", 0x71);
             break;
         case 0x29:
-            printCPUState("AND");
+            printCPUState("AND", 0x29);
             instr.opAnd(Instructions::Immediate);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x29);
             break;
         case 0x25:
-            printCPUState("And");
+            printCPUState("AND", 0x25);
             instr.opAnd(Instructions::ZeroPage);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x25);
             break;
         case 0x35:
-            printCPUState("And");
+            printCPUState("AND", 0x35);
             instr.opAnd(Instructions::ZeroPageX);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x35);
             break;
         case 0x2D:
-            printCPUState("And");
+            printCPUState("AND", 0x2D);
             instr.opAnd(Instructions::Absolute);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x2D);
             break;
         case 0x3D:
-            printCPUState("And");
+            printCPUState("AND", 0x3D);
             instr.opAnd(Instructions::AbsoluteX);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x3D);
             break;
         case 0x39:
-            printCPUState("And");
+            printCPUState("AND", 0x39);
             instr.opAnd(Instructions::AbsoluteY);
             pc += 2; // instruction length
-            printCPUState("AND");
+            printCPUState("AND", 0x39);
             break;
         default:
             //throw std::exception("Unimplemented opcode!");

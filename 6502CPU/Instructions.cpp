@@ -10,6 +10,8 @@ Instructions::Instructions(cpu& cpu)
 Instructions::~Instructions() {
 }
 
+// the function and most of the project is inspired from https://github.com/IvarWithoutBones
+// implementaion of the NES CPU
 std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
     auto instrAfterOp = m_cpu.pc + 1;
     switch (addrMode) {
