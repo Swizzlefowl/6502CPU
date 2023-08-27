@@ -59,7 +59,9 @@ std::uint16_t cpu::popWord() {
 
 cpu::cpu()
     : instr{*this} {
-   
+    pc = 0x10;
+    sp = 0xFD;
+    Statusreg.flags = 0x32;
 }
 
 cpu::~cpu() {
@@ -124,8 +126,46 @@ void cpu::execute(std::uint8_t opcode) {
             pc += 2; // instruction length
             printCPUState("ADC");
             break;
+        case 0x29:
+            printCPUState("AND");
+            instr.opAnd(Instructions::Immediate);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
+        case 0x25:
+            printCPUState("And");
+            instr.opAnd(Instructions::ZeroPage);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
+        case 0x35:
+            printCPUState("And");
+            instr.opAnd(Instructions::ZeroPageX);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
+        case 0x2D:
+            printCPUState("And");
+            instr.opAnd(Instructions::Absolute);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
+        case 0x3D:
+            printCPUState("And");
+            instr.opAnd(Instructions::AbsoluteX);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
+        case 0x39:
+            printCPUState("And");
+            instr.opAnd(Instructions::AbsoluteY);
+            pc += 2; // instruction length
+            printCPUState("AND");
+            break;
         default:
-            throw std::exception("Unimplemented opcode!");
+            //throw std::exception("Unimplemented opcode!");
+            //fmt::println("Unimplemented opcode!:{:0x}", opcode);
+            pc++;
             break;
     }
 }
