@@ -24,16 +24,19 @@ struct Instructions {
     cpu& m_cpu;
 
     std::uint16_t fetchArgumentadress(AddrMode addrMode);
-    std::uint8_t fetchArgument(AddrMode adress);
+    std::uint8_t fetchArgument(AddrMode mode);
 
-    //ADC - Add with Carry
-    void opADC(AddrMode addr);
+    // ADC - Add with Carry
+    void opADC(AddrMode mode);
 
     // AND - Logical AND
-    void opAND(AddrMode addr);
+    void opAND(AddrMode mode);
 
     // ASL - Arithmetic Shift Left
-    void opASL(AddrMode addr);
+    void opASL(AddrMode mode);
+
+    // BCC - Branch if Carry Clear
+    void opBCC(AddrMode mode);
 };
 
 

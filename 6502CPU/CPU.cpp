@@ -108,6 +108,7 @@ void cpu::execute(std::uint8_t opcode) {
             instr.opADC(Instructions::AbsoluteX);
             pc += 3; // instruction length
             printCPUState("ADC", 0x7D);
+            break;
         case 0x79:
             printCPUState("ADC", 0x79);
             instr.opADC(Instructions::AbsoluteY);
@@ -159,50 +160,56 @@ void cpu::execute(std::uint8_t opcode) {
         case 0x39:
             printCPUState("AND", 0x39);
             instr.opAND(Instructions::AbsoluteY);
-            pc += 3; // instruction length
             printCPUState("AND", 0x39);
+            pc += 3; // instruction length
             break;
         case 0x21:
             printCPUState("AND", 0x21);
             instr.opAND(Instructions::IndirectX);
-            pc += 2; // instruction length
             printCPUState("AND", 0x21);
+            pc += 2; // instruction length
             break;
         case 0x31:
             printCPUState("AND", 0x31);
             instr.opAND(Instructions::IndirectY);
-            pc += 2; // instruction length
             printCPUState("AND", 0x31);
+            pc += 2; // instruction length
             break;
         case 0x0A:
             printCPUState("ASL", 0x0A);
             instr.opASL(Instructions::Accumulator);
-            pc += 1; // instruction length
             printCPUState("ASL", 0x0A);
+            pc += 1; // instruction length
             break;
         case 0x06:
             printCPUState("ASL", 0x06);
             instr.opASL(Instructions::ZeroPage);
-            pc += 2; // instruction length
             printCPUState("ASL", 0x06);
+            pc += 2; // instruction length
             break;
         case 0x16:
             printCPUState("ASL", 0x16);
             instr.opASL(Instructions::ZeroPageX);
-            pc += 2; // instruction length
             printCPUState("ASL", 0x16);
+            pc += 2; // instruction length
             break;
         case 0x0E:
             printCPUState("ASL", 0x0E);
             instr.opASL(Instructions::Absolute);
-            pc += 3; // instruction length
             printCPUState("ASL", 0x0E);
+            pc += 3; // instruction length
             break;
         case 0x1E:
             printCPUState("ASL", 0x1E);
             instr.opASL(Instructions::AbsoluteX);
-            pc += 3; // instruction length
             printCPUState("ASL", 0x1E);
+            pc += 3; // instruction length
+            break;
+        case 0x90:
+            printCPUState("BCC", 0x90);
+            instr.opBCC(Instructions::Relative);
+            printCPUState("BCC", 0x90);
+            pc++;
             break;
         default:
             //throw std::exception("Unimplemented opcode!");

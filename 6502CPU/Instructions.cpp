@@ -25,8 +25,14 @@ std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
             return instrAfterOp;
             break;
         case Instructions::Relative:{
+                /*std::int16_t offset = m_cpu.readByte(instrAfterOp);
+                if (offset & StatusRegister::Negative) {
+                    offset |= 0xff00; 
+                    return (m_cpu.pc + offset);
+                    }
+                return m_cpu.pc + offset;*/
             std::int8_t offset = static_cast<std::int8_t>(m_cpu.readByte(instrAfterOp));
-            return (m_cpu.pc + offset) + 1 ;
+                return m_cpu.pc + offset + 1;
                 }
             break;
         case Instructions::IndirectX:{ 
@@ -95,13 +101,13 @@ std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
     }
 }
 
-std::uint8_t Instructions::fetchArgument(AddrMode addrMode) {
-    auto address = fetchArgumentadress(addrMode);
+std::uint8_t Instructions::fetchArgument(AddrMode mode) {
+    auto address = fetchArgumentadress(mode);
     return m_cpu.readByte(address);
 }
 
-void Instructions::opADC(AddrMode addr) {
-    auto operand = fetchArgument(addr);
+void Instructions::opADC(AddrMode mode) {
+    auto operand = fetchArgument(mode);
     m_cpu.AReg += operand;
 
     bool overflow = m_cpu.AReg < operand ? true : false;
@@ -117,8 +123,8 @@ void Instructions::opADC(AddrMode addr) {
     }
 }
 
-void Instructions::opAND(AddrMode addr) {
-    m_cpu.AReg &= fetchArgument(addr);
+void Instructions::opAND(AddrMode mode) {
+    m_cpu.AReg &= fetchArgument(mode);
 
      if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
@@ -126,8 +132,8 @@ void Instructions::opAND(AddrMode addr) {
         m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 
-void Instructions::opASL(AddrMode addr) {
-    if (addr == Instructions::Accumulator) {
+void Instructions::opASL(AddrMode mode) {
+     if (mode == Instructions::Accumulator) {
         // I am using the negative flag to just test if the 7th bit of
         // Areg is set or not
         if (m_cpu.AReg & StatusRegister::Negative)
@@ -141,7 +147,7 @@ void Instructions::opASL(AddrMode addr) {
             m_cpu.Statusreg.set(StatusRegister::Negative);
 
     } else {
-        auto adress = fetchArgumentadress(addr);
+        auto adress = fetchArgumentadress(mode);
         auto value = m_cpu.readByte(adress);
 
         // I am using the negative flag to just test if the 7th bit of
@@ -157,6 +163,13 @@ void Instructions::opASL(AddrMode addr) {
             m_cpu.Statusreg.set(StatusRegister::Negative);
 
         m_cpu.writeByte(adress, value);
+    }
+}
+
+void Instructions::opBCC(AddrMode mode) {
+    if (!m_cpu.Statusreg.isSet(StatusRegister::Carry)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
     }
 }
 
