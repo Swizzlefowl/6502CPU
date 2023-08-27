@@ -209,10 +209,43 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("BCC", 0x90);
             instr.opBCC(Instructions::Relative);
             printCPUState("BCC", 0x90);
-            pc++;
+            if (Statusreg.isSet(StatusRegister::Carry))
+                pc += 2;
+            break;
+        case 0xB0:
+            printCPUState("BCS", 0xB0);
+            instr.opBCS(Instructions::Relative);
+            printCPUState("BCS", 0xB0);
+            if (!Statusreg.isSet(StatusRegister::Carry))
+                pc += 2;
+            break;
+        case 0xF0:
+            printCPUState("BEQ", 0xF0);
+            instr.opBEQ(Instructions::Relative);
+            printCPUState("BEQ", 0xF0);
+            if (!Statusreg.isSet(StatusRegister::Zero))
+                pc += 2;
+            break;
+        case 0x30:
+            printCPUState("BMI", 0x30);
+            instr.opBMI(Instructions::Relative);
+            printCPUState("BMI", 0x30);
+            if (!Statusreg.isSet(StatusRegister::Negative))
+                pc += 2;
+        case 0x24:
+            printCPUState("BIT", 0x24);
+            instr.opBIT(Instructions::ZeroPage);
+            printCPUState("BIT", 0x24);
+            pc += 2;
+            break;
+        case 0x2C:
+            printCPUState("BIT", 0x2C);
+            instr.opBIT(Instructions::Absolute);
+            printCPUState("BIT", 0x2C);
+            pc += 3;
             break;
         default:
-            //throw std::exception("Unimplemented opcode!");
+            throw std::exception("Unimplemented opcode!");
             //fmt::println("Unimplemented opcode!:{:0x}", opcode);
             pc++;
             break;

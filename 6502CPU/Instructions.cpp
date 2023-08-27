@@ -173,3 +173,38 @@ void Instructions::opBCC(AddrMode mode) {
     }
 }
 
+void Instructions::opBCS(AddrMode mode) {
+    if (m_cpu.Statusreg.isSet(StatusRegister::Carry)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
+void Instructions::opBEQ(AddrMode mode) {
+    if (m_cpu.Statusreg.isSet(StatusRegister::Zero)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
+void Instructions::opBMI(AddrMode mode) {
+    if (m_cpu.Statusreg.isSet(StatusRegister::Negative)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
+void Instructions::opBIT(AddrMode mode) {
+    auto value = fetchArgument(mode);
+    
+    if ((value & m_cpu.AReg) == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (value & StatusRegister::Overflow)
+        m_cpu.Statusreg.set(StatusRegister::Overflow);
+
+    if (value & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+

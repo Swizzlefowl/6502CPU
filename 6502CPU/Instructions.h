@@ -37,6 +37,18 @@ struct Instructions {
 
     // BCC - Branch if Carry Clear
     void opBCC(AddrMode mode);
+
+    //BCS - Branch if Carry Set
+    void opBCS(AddrMode mode);
+
+    // BEQ - Branch if Equal
+    void opBEQ(AddrMode mode);
+
+    // BMI - Branch if Minus
+    void opBMI(AddrMode mode);
+
+    // BIT - Bit Test
+    void opBIT(AddrMode mode);
 };
 
 
