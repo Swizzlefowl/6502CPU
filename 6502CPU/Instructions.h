@@ -27,11 +27,13 @@ struct Instructions {
     std::uint8_t fetchArgument(AddrMode adress);
 
     //ADC - Add with Carry
-    void opAdc(AddrMode addr);
+    void opADC(AddrMode addr);
 
     // AND - Logical AND
-    void opAnd(AddrMode addr);
-    
+    void opAND(AddrMode addr);
+
+    // ASL - Arithmetic Shift Left
+    void opASL(AddrMode addr);
 };
 
 

@@ -100,7 +100,7 @@ std::uint8_t Instructions::fetchArgument(AddrMode addrMode) {
     return m_cpu.readByte(address);
 }
 
-void Instructions::opAdc(AddrMode addr) {
+void Instructions::opADC(AddrMode addr) {
     auto operand = fetchArgument(addr);
     m_cpu.AReg += operand;
 
@@ -117,12 +117,46 @@ void Instructions::opAdc(AddrMode addr) {
     }
 }
 
-void Instructions::opAnd(AddrMode addr) {
+void Instructions::opAND(AddrMode addr) {
     m_cpu.AReg &= fetchArgument(addr);
 
      if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
      if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opASL(AddrMode addr) {
+    if (addr == Instructions::Accumulator) {
+        // I am using the negative flag to just test if the 7th bit of
+        // Areg is set or not
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+
+        m_cpu.AReg <<= 1;
+        if (m_cpu.AReg == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    } else {
+        auto adress = fetchArgumentadress(addr);
+        auto value = m_cpu.readByte(adress);
+
+        // I am using the negative flag to just test if the 7th bit of
+        // value is set or not
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+
+        value <<= 1;
+        if (value == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+        m_cpu.writeByte(adress, value);
+    }
 }
 
