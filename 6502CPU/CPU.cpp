@@ -174,6 +174,36 @@ void cpu::execute(std::uint8_t opcode) {
             pc += 2; // instruction length
             printCPUState("AND", 0x31);
             break;
+        case 0x0A:
+            printCPUState("ASL", 0x0A);
+            instr.opASL(Instructions::Accumulator);
+            pc += 1; // instruction length
+            printCPUState("ASL", 0x0A);
+            break;
+        case 0x06:
+            printCPUState("ASL", 0x06);
+            instr.opASL(Instructions::ZeroPage);
+            pc += 2; // instruction length
+            printCPUState("ASL", 0x06);
+            break;
+        case 0x16:
+            printCPUState("ASL", 0x16);
+            instr.opASL(Instructions::ZeroPageX);
+            pc += 2; // instruction length
+            printCPUState("ASL", 0x16);
+            break;
+        case 0x0E:
+            printCPUState("ASL", 0x0E);
+            instr.opASL(Instructions::Absolute);
+            pc += 3; // instruction length
+            printCPUState("ASL", 0x0E);
+            break;
+        case 0x1E:
+            printCPUState("ASL", 0x1E);
+            instr.opASL(Instructions::AbsoluteX);
+            pc += 3; // instruction length
+            printCPUState("ASL", 0x1E);
+            break;
         default:
             //throw std::exception("Unimplemented opcode!");
             //fmt::println("Unimplemented opcode!:{:0x}", opcode);
