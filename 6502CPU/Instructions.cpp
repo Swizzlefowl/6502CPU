@@ -221,4 +221,10 @@ void Instructions::opBIT(AddrMode mode) {
         m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 
+void Instructions::opBRK(AddrMode mode) {
+    // TODO
+
+    return;
+}
+
 

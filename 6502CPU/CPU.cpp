@@ -259,6 +259,12 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("BIT", opcode);
             pc += 3;
             break;
+        case 0x00:
+            printCPUState("BRK", opcode);
+            instr.opBRK(Instructions::Implied);
+            printCPUState("BRK", opcode);
+            pc += 1;
+            break;
         default:
             throw std::exception("Unimplemented opcode!");
             //fmt::println("Unimplemented opcode!:{:0x}", opcode);

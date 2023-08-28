@@ -56,6 +56,9 @@ struct Instructions {
     // BIT - Bit Test
     void opBIT(AddrMode mode);
 
+    // BRK - Force Interrupt
+    void opBRK(AddrMode mode);
+
 };
 
 
