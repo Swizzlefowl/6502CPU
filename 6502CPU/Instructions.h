@@ -53,12 +53,29 @@ struct Instructions {
     // BPL - Branch if Positive
     void opBPL(AddrMode mode);
 
+    // BVC - Branch if Overflow Clear
+    void opBVC(AddrMode mode);
+
+    // BVS - Branch if Overflow Set
+    void opBVS(AddrMode mode);
+
     // BIT - Bit Test
     void opBIT(AddrMode mode);
 
     // BRK - Force Interrupt
     void opBRK(AddrMode mode);
 
+    // CLC - Clear Carry Flag
+    void opCLC(AddrMode mode);
+
+    // CLD - Clear Decimal Mode
+    void opCLD(AddrMode mode);
+
+    // CLI - Clear Interrupt Disable
+    void opCLI(AddrMode mode);
+
+    // CLV - Clear Overflow Flag
+    void opCLV(AddrMode mode);
 };
 
 

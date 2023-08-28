@@ -59,7 +59,7 @@ std::uint16_t cpu::popWord() {
 
 cpu::cpu()
     : instr{*this} {
-    pc = 0x10;
+    pc = 0x20;
     sp = 0xFD;
     Statusreg.flags = 0x32;
 }
@@ -247,6 +247,20 @@ void cpu::execute(std::uint8_t opcode) {
             if (Statusreg.isSet(StatusRegister::Negative))
                 pc += 2;
             break;
+        case 0x50:
+            printCPUState("BVC", opcode);
+            instr.opBVC(Instructions::Relative);
+            printCPUState("BVC", opcode);
+            if (Statusreg.isSet(StatusRegister::Overflow))
+                pc += 2;
+            break;
+        case 0x70:
+            printCPUState("BVS", opcode);
+            instr.opBVS(Instructions::Relative);
+            printCPUState("BVS", opcode);
+            if (!Statusreg.isSet(StatusRegister::Overflow))
+                pc += 2;
+            break;
         case 0x24:
             printCPUState("BIT", opcode);
             instr.opBIT(Instructions::ZeroPage);
@@ -263,6 +277,30 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("BRK", opcode);
             instr.opBRK(Instructions::Implied);
             printCPUState("BRK", opcode);
+            pc += 1;
+            break;
+        case 0x18:
+            printCPUState("CLC", opcode);
+            instr.opCLC(Instructions::Implied);
+            printCPUState("CLC", opcode);
+            pc += 1;
+            break;
+        case 0xD8:
+            printCPUState("CLD", opcode);
+            instr.opCLD(Instructions::Implied);
+            printCPUState("CLD", opcode);
+            pc += 1;
+            break;
+        case 0x58:
+            printCPUState("CLI", opcode);
+            instr.opCLI(Instructions::Implied);
+            printCPUState("CLI", opcode);
+            pc += 1;
+            break;
+        case 0xB8:
+            printCPUState("CLV", opcode);
+            instr.opCLV(Instructions::Implied);
+            printCPUState("CLV", opcode);
             pc += 1;
             break;
         default:

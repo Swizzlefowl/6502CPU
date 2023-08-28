@@ -208,6 +208,20 @@ void Instructions::opBPL(AddrMode mode) {
     }
 }
 
+void Instructions::opBVC(AddrMode mode) {
+    if (!m_cpu.Statusreg.isSet(StatusRegister::Overflow)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
+void Instructions::opBVS(AddrMode mode) {
+    if (m_cpu.Statusreg.isSet(StatusRegister::Overflow)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
 void Instructions::opBIT(AddrMode mode) {
     auto value = fetchArgument(mode);
     
@@ -223,8 +237,23 @@ void Instructions::opBIT(AddrMode mode) {
 
 void Instructions::opBRK(AddrMode mode) {
     // TODO
-
     return;
+}
+
+void Instructions::opCLC(AddrMode mode) {
+    m_cpu.Statusreg.clear(StatusRegister::Carry);
+}
+
+void Instructions::opCLD(AddrMode mode) {
+    m_cpu.Statusreg.clear(StatusRegister::Decimal);
+}
+
+void Instructions::opCLI(AddrMode mode) {
+    m_cpu.Statusreg.clear(StatusRegister::InterruptDisable);
+}
+
+void Instructions::opCLV(AddrMode mode) {
+    m_cpu.Statusreg.clear(StatusRegister::Overflow);
 }
 
 
