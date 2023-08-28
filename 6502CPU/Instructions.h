@@ -47,8 +47,15 @@ struct Instructions {
     // BMI - Branch if Minus
     void opBMI(AddrMode mode);
 
+     // BNE - Branch if Not Equal
+    void opBNE(AddrMode mode);
+
+    // BPL - Branch if Positive
+    void opBPL(AddrMode mode);
+
     // BIT - Bit Test
     void opBIT(AddrMode mode);
+
 };
 
 

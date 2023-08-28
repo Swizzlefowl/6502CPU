@@ -194,6 +194,20 @@ void Instructions::opBMI(AddrMode mode) {
     }
 }
 
+void Instructions::opBNE(AddrMode mode) {
+    if (!m_cpu.Statusreg.isSet(StatusRegister::Zero)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
+void Instructions::opBPL(AddrMode mode) {
+    if (!m_cpu.Statusreg.isSet(StatusRegister::Negative)) {
+        auto adress = fetchArgumentadress(mode);
+        m_cpu.pc = adress;
+    }
+}
+
 void Instructions::opBIT(AddrMode mode) {
     auto value = fetchArgument(mode);
     

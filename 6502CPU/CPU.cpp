@@ -80,168 +80,183 @@ void cpu::tick() {
 void cpu::execute(std::uint8_t opcode) {
     switch (opcode) {
         case 0x69:
-            printCPUState("ADC", 0x69);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::Immediate);
             pc += 2; // instruction length
-            printCPUState("ADC", 0x69);
+            printCPUState("ADC", opcode);
             break;
         case 0x65:
-            printCPUState("ADC", 0x65);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::ZeroPage);
             pc += 2; // instruction length
-            printCPUState("ADC", 0x65);
+            printCPUState("ADC", opcode);
             break;
         case 0x75:
-            printCPUState("ADC", 0x75);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::ZeroPageX);
             pc += 2; // instruction length
-            printCPUState("ADC", 0x75);
+            printCPUState("ADC", opcode);
             break;
         case 0x6D:
-            printCPUState("ADC", 0x6D);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::Absolute);
             pc += 3; // instruction length
-            printCPUState("ADC", 0x6D);
+            printCPUState("ADC", opcode);
             break;
         case 0x7D:
-            printCPUState("ADC", 0x7D);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::AbsoluteX);
             pc += 3; // instruction length
-            printCPUState("ADC", 0x7D);
+            printCPUState("ADC", opcode);
             break;
         case 0x79:
-            printCPUState("ADC", 0x79);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::AbsoluteY);
             pc += 3; // instruction length
-            printCPUState("ADC", 0x79);
+            printCPUState("ADC", opcode);
             break;
         case 0x61:
-            printCPUState("ADC", 0x61);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::IndirectX);
             pc += 2; // instruction length
-            printCPUState("ADC", 0x61);
+            printCPUState("ADC", opcode);
             break;
         case 0x71:
-            printCPUState("ADC", 0x71);
+            printCPUState("ADC", opcode);
             instr.opADC(Instructions::IndirectY);
             pc += 2; // instruction length
-            printCPUState("ADC", 0x71);
+            printCPUState("ADC", opcode);
             break;
         case 0x29:
-            printCPUState("AND", 0x29);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::Immediate);
             pc += 2; // instruction length
-            printCPUState("AND", 0x29);
+            printCPUState("AND", opcode);
             break;
         case 0x25:
-            printCPUState("AND", 0x25);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::ZeroPage);
             pc += 2; // instruction length
-            printCPUState("AND", 0x25);
+            printCPUState("AND", opcode);
             break;
         case 0x35:
-            printCPUState("AND", 0x35);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::ZeroPageX);
             pc += 2; // instruction length
-            printCPUState("AND", 0x35);
+            printCPUState("AND", opcode);
             break;
         case 0x2D:
-            printCPUState("AND", 0x2D);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::Absolute);
             pc += 3; // instruction length
-            printCPUState("AND", 0x2D);
+            printCPUState("AND", opcode);
             break;
         case 0x3D:
-            printCPUState("AND", 0x3D);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::AbsoluteX);
             pc += 3; // instruction length
-            printCPUState("AND", 0x3D);
+            printCPUState("AND", opcode);
             break;
         case 0x39:
-            printCPUState("AND", 0x39);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::AbsoluteY);
-            printCPUState("AND", 0x39);
+            printCPUState("AND", opcode);
             pc += 3; // instruction length
             break;
         case 0x21:
-            printCPUState("AND", 0x21);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::IndirectX);
-            printCPUState("AND", 0x21);
+            printCPUState("AND", opcode);
             pc += 2; // instruction length
             break;
         case 0x31:
-            printCPUState("AND", 0x31);
+            printCPUState("AND", opcode);
             instr.opAND(Instructions::IndirectY);
-            printCPUState("AND", 0x31);
+            printCPUState("AND", opcode);
             pc += 2; // instruction length
             break;
         case 0x0A:
-            printCPUState("ASL", 0x0A);
+            printCPUState("ASL", opcode);
             instr.opASL(Instructions::Accumulator);
-            printCPUState("ASL", 0x0A);
+            printCPUState("ASL", opcode);
             pc += 1; // instruction length
             break;
         case 0x06:
-            printCPUState("ASL", 0x06);
+            printCPUState("ASL", opcode);
             instr.opASL(Instructions::ZeroPage);
-            printCPUState("ASL", 0x06);
+            printCPUState("ASL", opcode);
             pc += 2; // instruction length
             break;
         case 0x16:
-            printCPUState("ASL", 0x16);
+            printCPUState("ASL", opcode);
             instr.opASL(Instructions::ZeroPageX);
-            printCPUState("ASL", 0x16);
+            printCPUState("ASL", opcode);
             pc += 2; // instruction length
             break;
         case 0x0E:
-            printCPUState("ASL", 0x0E);
+            printCPUState("ASL", opcode);
             instr.opASL(Instructions::Absolute);
-            printCPUState("ASL", 0x0E);
+            printCPUState("ASL", opcode);
             pc += 3; // instruction length
             break;
         case 0x1E:
-            printCPUState("ASL", 0x1E);
+            printCPUState("ASL", opcode);
             instr.opASL(Instructions::AbsoluteX);
-            printCPUState("ASL", 0x1E);
+            printCPUState("ASL", opcode);
             pc += 3; // instruction length
             break;
         case 0x90:
-            printCPUState("BCC", 0x90);
+            printCPUState("BCC", opcode);
             instr.opBCC(Instructions::Relative);
-            printCPUState("BCC", 0x90);
+            printCPUState("BCC", opcode);
             if (Statusreg.isSet(StatusRegister::Carry))
                 pc += 2;
             break;
         case 0xB0:
-            printCPUState("BCS", 0xB0);
+            printCPUState("BCS", opcode);
             instr.opBCS(Instructions::Relative);
-            printCPUState("BCS", 0xB0);
+            printCPUState("BCS", opcode);
             if (!Statusreg.isSet(StatusRegister::Carry))
                 pc += 2;
             break;
         case 0xF0:
-            printCPUState("BEQ", 0xF0);
+            printCPUState("BEQ", opcode);
             instr.opBEQ(Instructions::Relative);
-            printCPUState("BEQ", 0xF0);
+            printCPUState("BEQ", opcode);
             if (!Statusreg.isSet(StatusRegister::Zero))
                 pc += 2;
             break;
         case 0x30:
-            printCPUState("BMI", 0x30);
+            printCPUState("BMI", opcode);
             instr.opBMI(Instructions::Relative);
-            printCPUState("BMI", 0x30);
+            printCPUState("BMI", opcode);
             if (!Statusreg.isSet(StatusRegister::Negative))
                 pc += 2;
+            break;
+        case 0xD0:
+            printCPUState("BNE", opcode);
+            instr.opBNE(Instructions::Relative);
+            printCPUState("BNE", opcode);
+            if (Statusreg.isSet(StatusRegister::Zero))
+                pc += 2;
+            break;
+        case 0x10:
+            printCPUState("BPL", opcode);
+            instr.opBPL(Instructions::Relative);
+            printCPUState("BPL", opcode);
+            if (Statusreg.isSet(StatusRegister::Negative))
+                pc += 2;
+            break;
         case 0x24:
-            printCPUState("BIT", 0x24);
+            printCPUState("BIT", opcode);
             instr.opBIT(Instructions::ZeroPage);
-            printCPUState("BIT", 0x24);
+            printCPUState("BIT", opcode);
             pc += 2;
             break;
         case 0x2C:
-            printCPUState("BIT", 0x2C);
+            printCPUState("BIT", opcode);
             instr.opBIT(Instructions::Absolute);
-            printCPUState("BIT", 0x2C);
+            printCPUState("BIT", opcode);
             pc += 3;
             break;
         default:
