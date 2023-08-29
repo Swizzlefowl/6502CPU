@@ -387,6 +387,90 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("CPY", opcode);
             pc += 3;
             break;
+        case 0xC6:
+            printCPUState("DEC", opcode);
+            instr.opDEC(Instructions::ZeroPage);
+            printCPUState("DEC", opcode);
+            pc += 2;
+            break;
+        case 0xD6:
+            printCPUState("DEC", opcode);
+            instr.opDEC(Instructions::ZeroPageX);
+            printCPUState("DEC", opcode);
+            pc += 2;
+            break;
+        case 0xCE:
+            printCPUState("DEC", opcode);
+            instr.opDEC(Instructions::Absolute);
+            printCPUState("DEC", opcode);
+            pc += 3;
+            break;
+        case 0xDE:
+            printCPUState("DEC", opcode);
+            instr.opDEC(Instructions::AbsoluteX);
+            printCPUState("DEC", opcode);
+            pc += 3;
+            break;
+        case 0xCA:
+            printCPUState("DEX", opcode);
+            instr.opDEX(Instructions::Implied);
+            printCPUState("DEX", opcode);
+            pc += 1;
+            break;
+        case 0x88:
+            printCPUState("DEY", opcode);
+            instr.opDEY(Instructions::Implied);
+            printCPUState("DEY", opcode);
+            pc += 1;
+            break;
+        case 0x49:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::Immediate);
+            printCPUState("EOR", opcode);
+            pc += 2;
+            break;
+        case 0x45:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::ZeroPage);
+            printCPUState("EOR", opcode);
+            pc += 2;
+            break;
+        case 0x55:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::ZeroPageX);
+            printCPUState("EOR", opcode);
+            pc += 2;
+            break;
+        case 0x4D:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::Absolute);
+            printCPUState("EOR", opcode);
+            pc += 3;
+            break;
+        case 0x5D:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::AbsoluteX);
+            printCPUState("EOR", opcode);
+            pc += 3;
+            break;
+        case 0x59:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::AbsoluteY);
+            printCPUState("EOR", opcode);
+            pc += 3;
+            break;
+        case 0x41:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::IndirectX);
+            printCPUState("EOR", opcode);
+            pc += 2;
+            break;
+        case 0x51:
+            printCPUState("EOR", opcode);
+            instr.opEOR(Instructions::IndirectY);
+            printCPUState("EOR", opcode);
+            pc += 2;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
             throw std::exception("you are not kennough");

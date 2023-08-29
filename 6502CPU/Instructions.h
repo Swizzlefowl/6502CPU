@@ -85,6 +85,18 @@ struct Instructions {
 
     // CPY - Compare Y Register
     void opCPY(AddrMode mode);
+
+    // DEC - Decrement Memory
+    void opDEC(AddrMode mode);
+
+    // DEX - Decrement X Register
+    void opDEX(AddrMode mode);
+
+    // DEY - Decrement Y Register
+    void opDEY(AddrMode mode);
+
+    // EOR - Exclusive OR
+    void opEOR(AddrMode mode);
 };
 
 

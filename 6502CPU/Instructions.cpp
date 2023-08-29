@@ -301,4 +301,49 @@ void Instructions::opCPY(AddrMode mode) {
         m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 
+void Instructions::opDEC(AddrMode mode) {
+    auto adress = fetchArgumentadress(mode);
+    auto value = fetchArgument(mode);
+    value -= 1;
+
+    if (value == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (value & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    m_cpu.writeByte(adress, value);
+}
+
+void Instructions::opDEX(AddrMode mode) {
+    m_cpu.XReg -= 1;
+
+    if (m_cpu.XReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.XReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opDEY(AddrMode mode) {
+    m_cpu.YReg -= 1;
+
+    if (m_cpu.YReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.YReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opEOR(AddrMode mode) {
+    auto value = fetchArgument(mode);
+    m_cpu.AReg ^= value;
+
+    if (m_cpu.AReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.AReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
 
