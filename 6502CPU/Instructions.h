@@ -76,6 +76,15 @@ struct Instructions {
 
     // CLV - Clear Overflow Flag
     void opCLV(AddrMode mode);
+
+    // CMP - Compare
+    void opCMP(AddrMode mode);
+
+    // CPX - Compare X Register
+    void opCPX(AddrMode mode);
+
+    // CPY - Compare Y Register
+    void opCPY(AddrMode mode);
 };
 
 

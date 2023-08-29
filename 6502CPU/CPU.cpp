@@ -303,9 +303,93 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("CLV", opcode);
             pc += 1;
             break;
+        case 0xC9:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::Immediate);
+            printCPUState("CMP", opcode);
+            pc += 2;
+            break;
+        case 0xC5:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::ZeroPage);
+            printCPUState("CMP", opcode);
+            pc += 2;
+            break;
+        case 0xD5:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::ZeroPageX);
+            printCPUState("CMP", opcode);
+            pc += 2;
+            break;
+        case 0xCD:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::Absolute);
+            printCPUState("CMP", opcode);
+            pc += 3;
+            break;
+        case 0xDD:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::AbsoluteX);
+            printCPUState("CMP", opcode);
+            pc += 3;
+            break;
+        case 0xD9:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::AbsoluteY);
+            printCPUState("CMP", opcode);
+            pc += 3;
+            break;
+        case 0xC1:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::IndirectX);
+            printCPUState("CMP", opcode);
+            pc += 2;
+            break;
+        case 0xD1:
+            printCPUState("CMP", opcode);
+            instr.opCMP(Instructions::IndirectY);
+            printCPUState("CMP", opcode);
+            pc += 2;
+            break;
+        case 0xE0:
+            printCPUState("CPX", opcode);
+            instr.opCPX(Instructions::Immediate);
+            printCPUState("CPX", opcode);
+            pc += 2;
+            break;
+        case 0xE4:
+            printCPUState("CPX", opcode);
+            instr.opCPX(Instructions::ZeroPage);
+            printCPUState("CPX", opcode);
+            pc += 2;
+            break;
+        case 0xEC:
+            printCPUState("CPX", opcode);
+            instr.opCPX(Instructions::Absolute);
+            printCPUState("CPX", opcode);
+            pc += 3;
+            break;
+        case 0xC0:
+            printCPUState("CPY", opcode);
+            instr.opCPY(Instructions::Immediate);
+            printCPUState("CPY", opcode);
+            pc += 2;
+            break;
+        case 0xC4:
+            printCPUState("CPY", opcode);
+            instr.opCPY(Instructions::ZeroPage);
+            printCPUState("CPY", opcode);
+            pc += 2;
+            break;
+        case 0xCC:
+            printCPUState("CPY", opcode);
+            instr.opCPY(Instructions::Absolute);
+            printCPUState("CPY", opcode);
+            pc += 3;
+            break;
         default:
-            throw std::exception("Unimplemented opcode!");
-            //fmt::println("Unimplemented opcode!:{:0x}", opcode);
+            fmt::println("Unimplemented opcode!:{:0x}", opcode);
+            throw std::exception("you are not kennough");
             pc++;
             break;
     }

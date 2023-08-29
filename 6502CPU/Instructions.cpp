@@ -256,4 +256,49 @@ void Instructions::opCLV(AddrMode mode) {
     m_cpu.Statusreg.clear(StatusRegister::Overflow);
 }
 
+void Instructions::opCMP(AddrMode mode) {
+    auto value = fetchArgument(mode);
+
+    if (m_cpu.AReg >= value)
+        m_cpu.Statusreg.set(StatusRegister::Carry);
+
+    std::uint8_t result = m_cpu.AReg - value;
+
+    if (result == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (result & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opCPX(AddrMode mode) {
+    auto value = fetchArgument(mode);
+
+    if (m_cpu.XReg >= value)
+        m_cpu.Statusreg.set(StatusRegister::Carry);
+
+    std::uint8_t result = m_cpu.XReg - value;
+
+    if (result == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (result & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opCPY(AddrMode mode) {
+    auto value = fetchArgument(mode);
+
+    if (m_cpu.YReg >= value)
+        m_cpu.Statusreg.set(StatusRegister::Carry);
+
+    std::uint8_t result = m_cpu.YReg - value;
+
+    if (result == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (result & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
 

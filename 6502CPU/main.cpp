@@ -19,7 +19,7 @@ int main() {
     cpu.memory.resize(0xffff);
     file.seekg(0);
     file.read(cpu.memory.data(), fileSize);
-
+    
     try {
         while (true)
             cpu.tick();
