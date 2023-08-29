@@ -13,7 +13,7 @@ Instructions::~Instructions() {
 // the function and most of the project is inspired from https://github.com/IvarWithoutBones
 // implementaion of the NES CPU
 std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
-    auto instrAfterOp = m_cpu.pc + 1;
+    auto instrAfterOp = ((m_cpu.pc + 1) - 0x8000) % 0x4000;
     switch (addrMode) {
         case Instructions::Implied:
             return 0;
@@ -377,6 +377,28 @@ void Instructions::opINY(AddrMode mode) {
         m_cpu.Statusreg.set(StatusRegister::Zero);
 
     if (m_cpu.YReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opJMP(AddrMode mode) {
+    auto adress = fetchArgumentadress(mode);
+    m_cpu.pc = adress;
+}
+
+void Instructions::opJSR(AddrMode mode) {
+    auto adress = fetchArgumentadress(mode);
+
+    m_cpu.pushWord(m_cpu.pc + 2);
+    m_cpu.pc = adress;
+}
+
+void Instructions::opLDX(AddrMode mode) {
+    m_cpu.XReg = fetchArgument(mode);
+
+    if (m_cpu.XReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 

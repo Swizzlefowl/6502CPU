@@ -2,7 +2,7 @@
 
 // reads an uint8 byte from cpu memory
 std::uint8_t cpu::readByte(std::uint16_t adress) {
-    return memory[adress];
+    return memory[adress % 0x800];
 }
 
 // reads an uint16 word from cpu memory
@@ -17,7 +17,7 @@ std::uint16_t cpu::readWord(std::uint16_t adress) {
 }
 
 void cpu::writeByte(std::uint16_t adress, std::uint8_t val) {
-    this->memory[adress] = val;
+    this->memory[adress % 0x800] = val;
 }
 
 void cpu::writeWord(std::uint16_t adress, std::uint16_t val) {
@@ -59,7 +59,7 @@ std::uint16_t cpu::popWord() {
 
 cpu::cpu()
     : instr{*this} {
-    pc = 0x20;
+    pc = 0xC000;
     sp = 0xFD;
     Statusreg.flags = 0x32;
 }
@@ -73,7 +73,7 @@ void cpu::printCPUState(const std::string_view& opName, std::uint8_t opcode) {
 }
 
 void cpu::tick() {
-    auto opcode = this->readByte(pc);
+    auto opcode = this->readByte((pc - 0x8000) % 0x4000);
     execute(opcode);
 }
 
@@ -507,9 +507,54 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("INY", opcode);
             pc += 1;
             break;
+        case 0x4C:
+            printCPUState("JMP", opcode);
+            instr.opJMP(Instructions::Absolute);
+            printCPUState("JMP", opcode);
+            break;
+        case 0x6C:
+            printCPUState("JMP", opcode);
+            instr.opJMP(Instructions::Indirect);
+            printCPUState("JMP", opcode);
+            break;
+        case 0x20:
+            printCPUState("JSR", opcode);
+            instr.opJSR(Instructions::Absolute);
+            printCPUState("JSR", opcode);
+            break;
+        case 0xA2:
+            printCPUState("LDX", opcode);
+            instr.opLDX(Instructions::Immediate);
+            printCPUState("LDX", opcode);
+            pc += 2;
+            break;
+        case 0xA6:
+            printCPUState("LDX", opcode);
+            instr.opLDX(Instructions::ZeroPage);
+            printCPUState("LDX", opcode);
+            pc += 2;
+            break;
+        case 0xB6:
+            printCPUState("LDX", opcode);
+            instr.opLDX(Instructions::ZeroPageY);
+            printCPUState("LDX", opcode);
+            pc += 2;
+            break;
+        case 0xAE:
+            printCPUState("LDX", opcode);
+            instr.opLDX(Instructions::Absolute);
+            printCPUState("LDX", opcode);
+            pc += 3;
+            break;
+        case 0xBE:
+            printCPUState("LDX", opcode);
+            instr.opLDX(Instructions::AbsoluteY);
+            printCPUState("LDX", opcode);
+            pc += 3;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
-            throw std::exception("you are not kennough");
+            //throw std::exception("you are not kennough");
             pc++;
             break;
     }

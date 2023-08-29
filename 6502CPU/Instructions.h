@@ -106,6 +106,15 @@ struct Instructions {
 
     // INY - Increment Y Register
     void opINY(AddrMode mode);
+
+    //JMP - Jump
+    void opJMP(AddrMode mode);
+
+    // JSR - Jump to Subroutine
+    void opJSR(AddrMode mode);
+
+    // LDX - Load X Register
+    void opLDX(AddrMode mode);
 };
 
 

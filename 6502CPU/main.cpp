@@ -17,11 +17,11 @@ int main() {
 
     size_t fileSize = file.tellg();
     cpu.memory.resize(0xffff);
-    file.seekg(0);
+    file.seekg(0x10);
     file.read(cpu.memory.data(), fileSize);
     
     try {
-        while (true)
+        while (cpu.pc < (0xffff + 1))
             cpu.tick();
     }
     catch (std::exception& err) {
