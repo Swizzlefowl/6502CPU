@@ -346,4 +346,38 @@ void Instructions::opEOR(AddrMode mode) {
         m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 
+void Instructions::opINC(AddrMode mode) {
+    auto adress = fetchArgumentadress(mode);
+    auto value = fetchArgument(mode);
+    value += 1;
+
+    if (value == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (value & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    m_cpu.writeByte(adress, value);
+}
+
+void Instructions::opINX(AddrMode mode) {
+    m_cpu.XReg += 1;
+
+    if (m_cpu.XReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.XReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opINY(AddrMode mode) {
+    m_cpu.YReg += 1;
+
+    if (m_cpu.YReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.YReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
 

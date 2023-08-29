@@ -97,6 +97,15 @@ struct Instructions {
 
     // EOR - Exclusive OR
     void opEOR(AddrMode mode);
+
+    // INC - Increment Memory
+    void opINC(AddrMode mode);
+
+    // INX - Increment X Register
+    void opINX(AddrMode mode);
+
+    // INY - Increment Y Register
+    void opINY(AddrMode mode);
 };
 
 

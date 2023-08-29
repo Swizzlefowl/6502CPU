@@ -471,6 +471,42 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("EOR", opcode);
             pc += 2;
             break;
+        case 0xE6:
+            printCPUState("INC", opcode);
+            instr.opINC(Instructions::ZeroPage);
+            printCPUState("INC", opcode);
+            pc += 2;
+            break;
+        case 0xF6:
+            printCPUState("INC", opcode);
+            instr.opINC(Instructions::ZeroPageX);
+            printCPUState("INC", opcode);
+            pc += 2;
+            break;
+        case 0xEE:
+            printCPUState("INC", opcode);
+            instr.opINC(Instructions::Absolute);
+            printCPUState("INC", opcode);
+            pc += 3;
+            break;
+        case 0xFE:
+            printCPUState("INC", opcode);
+            instr.opINC(Instructions::AbsoluteX);
+            printCPUState("INC", opcode);
+            pc += 3;
+            break;
+        case 0xE8:
+            printCPUState("INX", opcode);
+            instr.opINX(Instructions::Implied);
+            printCPUState("INX", opcode);
+            pc += 1;
+            break;
+        case 0xC8:
+            printCPUState("INY", opcode);
+            instr.opINY(Instructions::Implied);
+            printCPUState("INY", opcode);
+            pc += 1;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
             throw std::exception("you are not kennough");
