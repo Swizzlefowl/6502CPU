@@ -389,7 +389,17 @@ void Instructions::opJSR(AddrMode mode) {
     auto adress = fetchArgumentadress(mode);
 
     m_cpu.pushWord(m_cpu.pc + 2);
-    m_cpu.pc = adress;
+    m_cpu.pc = adress + 1;
+}
+
+void Instructions::opLDA(AddrMode mode) {
+    m_cpu.AReg = fetchArgument(mode);
+
+    if (m_cpu.AReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.AReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
 }
 
 void Instructions::opLDX(AddrMode mode) {
@@ -400,6 +410,54 @@ void Instructions::opLDX(AddrMode mode) {
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opLDY(AddrMode mode) {
+    m_cpu.YReg = fetchArgument(mode);
+
+    if (m_cpu.YReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.YReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opLSR(AddrMode mode) {
+    if (mode == Instructions::Accumulator) {
+        // I am using the negative flag to just test if the 7th bit of
+        // Areg is set or not
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+
+        m_cpu.AReg >>= 1;
+        if (m_cpu.AReg == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    } else {
+        auto adress = fetchArgumentadress(mode);
+        auto value = m_cpu.readByte(adress);
+
+        // I am using the negative flag to just test if the 7th bit of
+        // value is set or not
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+
+        value >>= 1;
+        if (value == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+        m_cpu.writeByte(adress, value);
+    }
+}
+
+void Instructions::opNOP(AddrMode mode) {
+    return;
 }
 
 

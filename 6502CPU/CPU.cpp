@@ -522,6 +522,54 @@ void cpu::execute(std::uint8_t opcode) {
             instr.opJSR(Instructions::Absolute);
             printCPUState("JSR", opcode);
             break;
+        case 0xA9:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::Immediate);
+            printCPUState("LDA", opcode);
+            pc += 2;
+            break;
+        case 0xA5:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::ZeroPage);
+            printCPUState("LDA", opcode);
+            pc += 2;
+            break;
+        case 0xB5:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::ZeroPageX);
+            printCPUState("LDA", opcode);
+            pc += 2;
+            break;
+        case 0xAD:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::Absolute);
+            printCPUState("LDA", opcode);
+            pc += 3;
+            break;
+        case 0xBD:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::AbsoluteX);
+            printCPUState("LDA", opcode);
+            pc += 3;
+            break;
+        case 0xB9:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::AbsoluteY);
+            printCPUState("LDA", opcode);
+            pc += 3;
+            break;
+        case 0xA1:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::IndirectX);
+            printCPUState("LDA", opcode);
+            pc += 2;
+            break;
+        case 0xB1:
+            printCPUState("LDA", opcode);
+            instr.opLDA(Instructions::IndirectY);
+            printCPUState("LDA", opcode);
+            pc += 2;
+            break;
         case 0xA2:
             printCPUState("LDX", opcode);
             instr.opLDX(Instructions::Immediate);
@@ -551,6 +599,72 @@ void cpu::execute(std::uint8_t opcode) {
             instr.opLDX(Instructions::AbsoluteY);
             printCPUState("LDX", opcode);
             pc += 3;
+            break;
+        case 0xA0:
+            printCPUState("LDY", opcode);
+            instr.opLDY(Instructions::Immediate);
+            printCPUState("LDY", opcode);
+            pc += 2;
+            break;
+        case 0xA4:
+            printCPUState("LDY", opcode);
+            instr.opLDY(Instructions::ZeroPage);
+            printCPUState("LDY", opcode);
+            pc += 2;
+            break;
+        case 0xB4:
+            printCPUState("LDY", opcode);
+            instr.opLDY(Instructions::ZeroPageX);
+            printCPUState("LDY", opcode);
+            pc += 2;
+            break;
+        case 0xAC:
+            printCPUState("LDY", opcode);
+            instr.opLDY(Instructions::Absolute);
+            printCPUState("LDY", opcode);
+            pc += 3;
+            break;
+        case 0xBC:
+            printCPUState("LDY", opcode);
+            instr.opLDY(Instructions::AbsoluteX);
+            printCPUState("LDY", opcode);
+            pc += 3;
+            break;
+        case 0x4A:
+            printCPUState("LSR", opcode);
+            instr.opLSR(Instructions::Accumulator);
+            printCPUState("LSR", opcode);
+            pc += 1;
+            break;
+        case 0x46:
+            printCPUState("LSR", opcode);
+            instr.opLSR(Instructions::ZeroPage);
+            printCPUState("LSR", opcode);
+            pc += 2;
+            break;
+        case 0x56:
+            printCPUState("LSR", opcode);
+            instr.opLSR(Instructions::ZeroPageX);
+            printCPUState("LSR", opcode);
+            pc += 2;
+            break;
+        case 0x4E:
+            printCPUState("LSR", opcode);
+            instr.opLSR(Instructions::Absolute);
+            printCPUState("LSR", opcode);
+            pc += 3;
+            break;
+        case 0x5E:
+            printCPUState("LSR", opcode);
+            instr.opLSR(Instructions::AbsoluteX);
+            printCPUState("LSR", opcode);
+            pc += 3;
+            break;
+        case 0xEA:
+            printCPUState("NOP", opcode);
+            instr.opNOP(Instructions::Implied);
+            printCPUState("NOP", opcode);
+            pc += 1;
             break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);

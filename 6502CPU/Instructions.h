@@ -113,8 +113,20 @@ struct Instructions {
     // JSR - Jump to Subroutine
     void opJSR(AddrMode mode);
 
+    // LDA - Load Accumulator
+    void opLDA(AddrMode mode);
+
     // LDX - Load X Register
     void opLDX(AddrMode mode);
+
+    // LDY - Load Y Register
+    void opLDY(AddrMode mode);
+
+    // LSR - Logical Shift Right
+    void opLSR(AddrMode mode);
+
+    // NOP - No Operation
+    void opNOP(AddrMode mode);
 };
 
 
