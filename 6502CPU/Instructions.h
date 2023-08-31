@@ -127,6 +127,24 @@ struct Instructions {
 
     // NOP - No Operation
     void opNOP(AddrMode mode);
+
+    // ORA - Logical Inclusive OR
+    void opORA(AddrMode mode);
+
+    // PHA - Push Accumulator
+    void opPHA(AddrMode mode);
+
+    // PHP - Push Processor Status
+    void opPHP(AddrMode mode);
+
+    // PLA - Pull Accumulator
+    void opPLA(AddrMode mode);
+
+    // PLP - Pull Processor Status
+    void opPLP(AddrMode mode);
+
+    // ROL - Rotate Left
+    void opROL(AddrMode mode);
 };
 
 

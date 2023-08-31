@@ -666,9 +666,81 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("NOP", opcode);
             pc += 1;
             break;
+        case 0x09:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::Immediate);
+            printCPUState("ORA", opcode);
+            pc += 2;
+            break;
+        case 0x05:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::ZeroPage);
+            printCPUState("ORA", opcode);
+            pc += 2;
+            break;
+        case 0x15:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::ZeroPageX);
+            printCPUState("ORA", opcode);
+            pc += 2;
+            break;
+        case 0x0D:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::Absolute);
+            printCPUState("ORA", opcode);
+            pc += 3;
+            break;
+        case 0x1D:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::AbsoluteX);
+            printCPUState("ORA", opcode);
+            pc += 3;
+            break;
+        case 0x19:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::AbsoluteY);
+            printCPUState("ORA", opcode);
+            pc += 3;
+            break;
+        case 0x01:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::IndirectX);
+            printCPUState("ORA", opcode);
+            pc += 2;
+            break;
+        case 0x11:
+            printCPUState("ORA", opcode);
+            instr.opORA(Instructions::IndirectY);
+            printCPUState("ORA", opcode);
+            pc += 2;
+            break;
+        case 0x48:
+            printCPUState("PHA", opcode);
+            instr.opPHA(Instructions::Implied);
+            printCPUState("PHA", opcode);
+            pc += 1;
+            break;
+        case 0x08:
+            printCPUState("PHP", opcode);
+            instr.opPHP(Instructions::Implied);
+            printCPUState("PHP", opcode);
+            pc += 1;
+            break;
+        case 0x68:
+            printCPUState("PLA", opcode);
+            instr.opPLA(Instructions::Implied);
+            printCPUState("PLA", opcode);
+            pc += 1;
+            break;
+        case 0x28:
+            printCPUState("PLP", opcode);
+            instr.opPLP(Instructions::Implied);
+            printCPUState("PLP", opcode);
+            pc += 1;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
-            //throw std::exception("you are not kennough");
+            throw std::exception("more barbie then(than) ken it would seem");
             pc++;
             break;
     }

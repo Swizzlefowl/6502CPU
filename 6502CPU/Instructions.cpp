@@ -457,7 +457,46 @@ void Instructions::opLSR(AddrMode mode) {
 }
 
 void Instructions::opNOP(AddrMode mode) {
+    // TODO throw ken here, lazy ass fuck
+    // needs to return tp his job
     return;
+}
+
+void Instructions::opORA(AddrMode mode) {
+    auto value = fetchArgument(mode);
+    m_cpu.AReg |= value;
+
+    if (m_cpu.AReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.AReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opPHA(AddrMode mode) {
+    m_cpu.pushByte(m_cpu.AReg);
+}
+
+void Instructions::opPHP(AddrMode mode) {
+    m_cpu.pushByte(m_cpu.Statusreg.flags);
+}
+
+void Instructions::opPLA(AddrMode mode) {
+    m_cpu.AReg = m_cpu.popByte();
+
+    if (m_cpu.AReg == 0)
+        m_cpu.Statusreg.set(StatusRegister::Zero);
+
+    if (m_cpu.AReg & StatusRegister::Negative)
+        m_cpu.Statusreg.set(StatusRegister::Negative);
+}
+
+void Instructions::opPLP(AddrMode mode) {
+    m_cpu.Statusreg.flags = m_cpu.popByte();
+}
+
+void Instructions::opROL(AddrMode mode) {
+
 }
 
 
