@@ -424,9 +424,9 @@ void Instructions::opLDY(AddrMode mode) {
 
 void Instructions::opLSR(AddrMode mode) {
     if (mode == Instructions::Accumulator) {
-        // I am using the negative flag to just test if the 7th bit of
+        // I am using the Carry flag to just test if the 0th bit of
         // Areg is set or not
-        if (m_cpu.AReg & StatusRegister::Negative)
+        if (m_cpu.AReg & StatusRegister::Carry)
             m_cpu.Statusreg.set(StatusRegister::Carry);
 
         m_cpu.AReg >>= 1;
