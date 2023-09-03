@@ -138,6 +138,8 @@ void Instructions::opASL(AddrMode mode) {
         // Areg is set or not
         if (m_cpu.AReg & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         m_cpu.AReg <<= 1;
         if (m_cpu.AReg == 0)
@@ -154,6 +156,8 @@ void Instructions::opASL(AddrMode mode) {
         // value is set or not
         if (value & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         value <<= 1;
         if (value == 0)
@@ -428,6 +432,8 @@ void Instructions::opLSR(AddrMode mode) {
         // Areg is set or not
         if (m_cpu.AReg & StatusRegister::Carry)
             m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         m_cpu.AReg >>= 1;
         if (m_cpu.AReg == 0)
@@ -440,10 +446,12 @@ void Instructions::opLSR(AddrMode mode) {
         auto adress = fetchArgumentadress(mode);
         auto value = m_cpu.readByte(adress);
 
-        // I am using the negative flag to just test if the 7th bit of
+        // I am using the Carry flag to just test if the 0th bit of
         // value is set or not
-        if (value & StatusRegister::Negative)
+        if (value & StatusRegister::Carry)
             m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         value >>= 1;
         if (value == 0)
@@ -458,7 +466,7 @@ void Instructions::opLSR(AddrMode mode) {
 
 void Instructions::opNOP(AddrMode mode) {
     // TODO throw ken here, lazy ass fuck
-    // needs to return tp his job
+    // needs to return to his job
     return;
 }
 
@@ -496,6 +504,91 @@ void Instructions::opPLP(AddrMode mode) {
 }
 
 void Instructions::opROL(AddrMode mode) {
+    if (mode == Instructions::Accumulator) {
+        bool oldBitSeven = m_cpu.AReg & StatusRegister::Negative;
+
+        m_cpu.AReg <<= 1;
+        if (m_cpu.AReg == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
+            m_cpu.AReg |= StatusRegister::Carry;
+
+        if (oldBitSeven)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+        else {
+             m_cpu.Statusreg.clear(StatusRegister::Carry);
+        }
+
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    } else {
+        auto adress = fetchArgumentadress(mode);
+        auto value = m_cpu.readByte(adress);
+        bool oldBitSeven = value & StatusRegister::Negative;
+
+        value <<= 1;
+        if (value == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
+            value |= StatusRegister::Carry;
+
+        if (oldBitSeven)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
+
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+        m_cpu.writeByte(adress, value);
+    }
+
+}
+
+void Instructions::opROR(AddrMode mode) {
+    if (mode == Instructions::Accumulator) {
+        bool oldBitZero = m_cpu.AReg & StatusRegister::Carry;
+
+        m_cpu.AReg >>= 1;
+        if (m_cpu.AReg == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
+            m_cpu.AReg |= StatusRegister::Negative;
+
+        if (oldBitZero)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
+
+        if (m_cpu.AReg & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+    } else {
+        auto adress = fetchArgumentadress(mode);
+        auto value = m_cpu.readByte(adress);
+        bool oldBitZero = value & StatusRegister::Carry;
+
+        value <<= 1;
+        if (value == 0)
+            m_cpu.Statusreg.set(StatusRegister::Zero);
+
+        if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
+            value |= StatusRegister::Negative;
+
+        if (oldBitZero)
+            m_cpu.Statusreg.set(StatusRegister::Carry);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Carry);
+
+        if (value & StatusRegister::Negative)
+            m_cpu.Statusreg.set(StatusRegister::Negative);
+
+        m_cpu.writeByte(adress, value);
+    }
 
 }
 

@@ -145,6 +145,9 @@ struct Instructions {
 
     // ROL - Rotate Left
     void opROL(AddrMode mode);
+
+    // ROR - Rotate Right
+    void opROR(AddrMode mode);
 };
 
 
