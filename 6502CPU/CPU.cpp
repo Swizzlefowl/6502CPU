@@ -738,6 +738,66 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("PLP", opcode);
             pc += 1;
             break;
+        case 0x2A:
+            printCPUState("ROL", opcode);
+            instr.opROL(Instructions::Accumulator);
+            printCPUState("ROL", opcode);
+            pc += 1;
+            break;
+        case 0x26:
+            printCPUState("ROL", opcode);
+            instr.opROL(Instructions::ZeroPage);
+            printCPUState("ROL", opcode);
+            pc += 2;
+            break;
+        case 0x36:
+            printCPUState("ROL", opcode);
+            instr.opROL(Instructions::ZeroPageX);
+            printCPUState("ROL", opcode);
+            pc += 2;
+            break;
+        case 0x2E:
+            printCPUState("ROL", opcode);
+            instr.opROL(Instructions::Absolute);
+            printCPUState("ROL", opcode);
+            pc += 3;
+            break;
+        case 0x3E:
+            printCPUState("ROL", opcode);
+            instr.opROL(Instructions::AbsoluteX);
+            printCPUState("ROL", opcode);
+            pc += 3;
+            break;
+        case 0x6A:
+            printCPUState("ROR", opcode);
+            instr.opROR(Instructions::Accumulator);
+            printCPUState("ROR", opcode);
+            pc += 1;
+            break;
+        case 0x66:
+            printCPUState("ROR", opcode);
+            instr.opROR(Instructions::ZeroPage);
+            printCPUState("ROR", opcode);
+            pc += 2;
+            break;
+        case 0x76:
+            printCPUState("ROR", opcode);
+            instr.opROR(Instructions::ZeroPageX);
+            printCPUState("ROR", opcode);
+            pc += 2;
+            break;
+        case 0x6E:
+            printCPUState("ROR", opcode);
+            instr.opROR(Instructions::Absolute);
+            printCPUState("ROR", opcode);
+            pc += 3;
+            break;
+        case 0x7E:
+            printCPUState("ROR", opcode);
+            instr.opROR(Instructions::AbsoluteX);
+            printCPUState("ROR", opcode);
+            pc += 3;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
             throw std::exception("more barbie then(than) ken it would seem");
