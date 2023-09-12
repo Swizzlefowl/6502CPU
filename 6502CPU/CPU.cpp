@@ -798,6 +798,186 @@ void cpu::execute(std::uint8_t opcode) {
             printCPUState("ROR", opcode);
             pc += 3;
             break;
+        case 0xE9:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::Immediate);
+            printCPUState("SBC", opcode);
+            pc += 2;
+            break;
+        case 0xE5:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::ZeroPage);
+            printCPUState("SBC", opcode);
+            pc += 2;
+            break;
+        case 0xF5:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::ZeroPageX);
+            printCPUState("SBC", opcode);
+            pc += 2;
+            break;
+        case 0xED:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::Absolute);
+            printCPUState("SBC", opcode);
+            pc += 3;
+            break;
+        case 0xFD:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::AbsoluteX);
+            printCPUState("SBC", opcode);
+            pc += 3;
+            break;
+        case 0xF9:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::AbsoluteY);
+            printCPUState("SBC", opcode);
+            pc += 3;
+            break;
+        case 0xE1:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::IndirectX);
+            printCPUState("SBC", opcode);
+            pc += 2;
+            break;
+        case 0xF1:
+            printCPUState("SBC", opcode);
+            instr.opSBC(Instructions::IndirectY);
+            printCPUState("SBC", opcode);
+            pc += 2;
+            break;
+        case 0x38:
+            printCPUState("SEC", opcode);
+            instr.opSEC(Instructions::Implied);
+            printCPUState("SEC", opcode);
+            pc += 1;
+            break;
+        case 0xF8:
+            printCPUState("SED", opcode);
+            instr.opSED(Instructions::Implied);
+            printCPUState("SED", opcode);
+            pc += 1;
+            break;
+        case 0x78:
+            printCPUState("SEI", opcode);
+            instr.opSEI(Instructions::Implied);
+            printCPUState("SEI", opcode);
+            pc += 1;
+            break;
+        case 0x85:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::ZeroPage);
+            printCPUState("STA", opcode);
+            pc += 2;
+            break;
+        case 0x95:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::ZeroPageX);
+            printCPUState("STA", opcode);
+            pc += 2;
+            break;
+        case 0x8D:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::Absolute);
+            printCPUState("STA", opcode);
+            pc += 3;
+            break;
+        case 0x9D:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::AbsoluteX);
+            printCPUState("STA", opcode);
+            pc += 3;
+            break;
+        case 0x99:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::AbsoluteY);
+            printCPUState("STA", opcode);
+            pc += 3;
+            break;
+        case 0x81:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::IndirectX);
+            printCPUState("STA", opcode);
+            pc += 2;
+            break;
+        case 0x91:
+            printCPUState("STA", opcode);
+            instr.opSTA(Instructions::IndirectY);
+            printCPUState("STA", opcode);
+            pc += 2;
+            break;
+        case 0x86:
+            printCPUState("STX", opcode);
+            instr.opSTX(Instructions::ZeroPage);
+            printCPUState("STX", opcode);
+            pc += 2;
+            break;
+        case 0x96:
+            printCPUState("STX", opcode);
+            instr.opSTX(Instructions::ZeroPageY);
+            printCPUState("STX", opcode);
+            pc += 2;
+            break;
+        case 0x8E:
+            printCPUState("STX", opcode);
+            instr.opSTX(Instructions::Absolute);
+            printCPUState("STX", opcode);
+            pc += 3;
+            break;
+        case 0x84:
+            printCPUState("STY", opcode);
+            instr.opSTY(Instructions::ZeroPage);
+            printCPUState("STY", opcode);
+            pc += 2;
+            break;
+        case 0x94:
+            printCPUState("STY", opcode);
+            instr.opSTY(Instructions::ZeroPageX);
+            printCPUState("STY", opcode);
+            pc += 2;
+            break;
+        case 0x8C:
+            printCPUState("STY", opcode);
+            instr.opSTY(Instructions::Absolute);
+            printCPUState("STY", opcode);
+            pc += 3;
+            break;
+        case 0xAA:
+            printCPUState("TAX", opcode);
+            instr.opTAX(Instructions::Implied);
+            printCPUState("TAX", opcode);
+            pc += 1;
+            break;
+        case 0xA8:
+            printCPUState("TAY", opcode);
+            instr.opTAY(Instructions::Implied);
+            printCPUState("TAY", opcode);
+            pc += 1;
+            break;
+        case 0xBA:
+            printCPUState("TSX", opcode);
+            instr.opTSX(Instructions::Implied);
+            printCPUState("TSX", opcode);
+            pc += 1;
+            break;
+        case 0x8A:
+            printCPUState("TXA", opcode);
+            instr.opTXA(Instructions::Implied);
+            printCPUState("TXA", opcode);
+            pc += 1;
+            break;
+        case 0x9A:
+            printCPUState("TXS", opcode);
+            instr.opTXS(Instructions::Implied);
+            printCPUState("TXS", opcode);
+            pc += 1;
+            break;
+        case 0x98:
+            printCPUState("TYA", opcode);
+            instr.opTYA(Instructions::Implied);
+            printCPUState("TYA", opcode);
+            pc += 1;
+            break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
             throw std::exception("more barbie then(than) ken it would seem");

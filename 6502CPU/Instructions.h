@@ -148,6 +148,51 @@ struct Instructions {
 
     // ROR - Rotate Right
     void opROR(AddrMode mode);
+
+    // RTI - Return from Interrupt
+    void opRTI(AddrMode mode);
+
+    //RTS - Return from Subroutine
+    void opRTS(AddrMode mode);
+
+    // SBC - Subtract with Carry
+    void opSBC(AddrMode mode);
+
+    // SEC - Set Carry Flag
+    void opSEC(AddrMode mode);
+
+    // SED - Set Decimal Flag
+    void opSED(AddrMode mode);
+
+    // SEI - Set Interrupt Disable
+    void opSEI(AddrMode mode);
+
+    // STA - Store Accumulator
+    void opSTA(AddrMode mode);
+
+    // STX - Store X Register
+    void opSTX(AddrMode mode);
+
+    // STY - Store Y Register
+    void opSTY(AddrMode mode);
+
+    // TAX - Transfer Accumulator to X
+    void opTAX(AddrMode mode);
+
+    // TAY - Transfer Accumulator to Y
+    void opTAY(AddrMode mode);
+
+    // TSX - Transfer Stack Pointer to X
+    void opTSX(AddrMode mode);
+
+    // TXA - Transfer X to Accumulator
+    void opTXA(AddrMode mode);
+
+    // TXS - Transfer X to Stack Pointer
+    void opTXS(AddrMode mode);
+
+    // TYA - Transfer Y to Accumulator
+    void opTYA(AddrMode mode);
 };
 
 
