@@ -43,16 +43,16 @@ std::uint8_t cpu::popByte() {
 }
 
 void cpu::pushWord(std::uint16_t value) {
-    std::uint8_t LoByte = static_cast<uint8_t>(value >> 8);
-    std::uint8_t HiByte = static_cast<uint8_t>(value & 0x00ff);
+    std::uint8_t LoByte = value;
+    std::uint8_t HiByte = (value >> 8);
 
-    pushByte(HiByte);
     pushByte(LoByte);
+    pushByte(HiByte);
 }
 
 std::uint16_t cpu::popWord() {
-    std::uint16_t LoByte = popByte();
     std::uint16_t HiByte = popByte();
+    std::uint16_t LoByte = popByte();
 
     return (HiByte << 8) | LoByte;
 }
@@ -61,7 +61,7 @@ cpu::cpu()
     : instr{*this} {
     pc = 0xC000;
     sp = 0xFD;
-    Statusreg.flags = 0x32;
+    Statusreg.flags = StatusRegister::InterruptDisable | StatusRegister::Break1 | StatusRegister::Break2;
 }
 
 cpu::~cpu() {
@@ -70,6 +70,7 @@ cpu::~cpu() {
 
 void cpu::printCPUState(const std::string_view& opName, std::uint8_t opcode) {
     fmt::println("{}:{:0x} PC:{:0x} SP:{:0x} AReg:{:0x} XReg:{:0x} YReg:{:0x} ", opName, opcode, pc, sp, AReg, XReg, YReg);
+    fmt::println("{:0b}", Statusreg.flags);
 }
 
 void cpu::tick() {
@@ -1002,6 +1003,9 @@ void StatusRegister::set(const FlagBits& Mask) {
 }
 
 void StatusRegister::clear(const FlagBits& Mask) {
+    if ((flags & Mask) == 0)
+        return;
+
     this->flags = this->flags ^ Mask;
 }
 

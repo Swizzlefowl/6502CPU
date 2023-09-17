@@ -30,9 +30,9 @@ std::uint16_t Instructions::fetchArgumentadress(AddrMode addrMode) {
                     offset |= 0xff00; 
                     return (m_cpu.pc + offset);
                     }
-                return m_cpu.pc + offset;*/
+                return m_cpu.pc + offset + 1;*/
             std::int8_t offset = static_cast<std::int8_t>(m_cpu.readByte(instrAfterOp));
-                return m_cpu.pc + offset + 1;
+            return m_cpu.pc + offset + 1;
                 }
             break;
         case Instructions::IndirectX:{ 
@@ -114,12 +114,21 @@ void Instructions::opADC(AddrMode mode) {
     if (overflow) {
         m_cpu.Statusreg.set(StatusRegister::Overflow);
         m_cpu.Statusreg.set(StatusRegister::Carry);
+    } else {
+        m_cpu.Statusreg.clear(StatusRegister::Overflow);
+        m_cpu.Statusreg.clear(StatusRegister::Carry);
     }
+
     if (m_cpu.AReg == 0) {
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    } else {
+         m_cpu.Statusreg.clear(StatusRegister::Zero);
     }
+
     if (m_cpu.AReg & StatusRegister::Negative) {
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    } else {
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
     }
 }
 
@@ -128,8 +137,13 @@ void Instructions::opAND(AddrMode mode) {
 
      if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+     else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
+
      if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+     else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opASL(AddrMode mode) {
@@ -142,11 +156,16 @@ void Instructions::opASL(AddrMode mode) {
             m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         m_cpu.AReg <<= 1;
+
         if (m_cpu.AReg == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.AReg & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     } else {
         auto adress = fetchArgumentadress(mode);
@@ -162,9 +181,13 @@ void Instructions::opASL(AddrMode mode) {
         value <<= 1;
         if (value == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (value & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
         m_cpu.writeByte(adress, value);
     }
@@ -231,12 +254,18 @@ void Instructions::opBIT(AddrMode mode) {
     
     if ((value & m_cpu.AReg) == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (value & StatusRegister::Overflow)
         m_cpu.Statusreg.set(StatusRegister::Overflow);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Overflow);
 
     if (value & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opBRK(AddrMode mode) {
@@ -265,14 +294,20 @@ void Instructions::opCMP(AddrMode mode) {
 
     if (m_cpu.AReg >= value)
         m_cpu.Statusreg.set(StatusRegister::Carry);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Carry);
 
     std::uint8_t result = m_cpu.AReg - value;
 
     if (result == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (result & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opCPX(AddrMode mode) {
@@ -280,14 +315,20 @@ void Instructions::opCPX(AddrMode mode) {
 
     if (m_cpu.XReg >= value)
         m_cpu.Statusreg.set(StatusRegister::Carry);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Carry);
 
     std::uint8_t result = m_cpu.XReg - value;
 
     if (result == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (result & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opCPY(AddrMode mode) {
@@ -295,14 +336,20 @@ void Instructions::opCPY(AddrMode mode) {
 
     if (m_cpu.YReg >= value)
         m_cpu.Statusreg.set(StatusRegister::Carry);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Carry);
 
     std::uint8_t result = m_cpu.YReg - value;
 
     if (result == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (result & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opDEC(AddrMode mode) {
@@ -312,9 +359,13 @@ void Instructions::opDEC(AddrMode mode) {
 
     if (value == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (value & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     m_cpu.writeByte(adress, value);
 }
@@ -324,9 +375,13 @@ void Instructions::opDEX(AddrMode mode) {
 
     if (m_cpu.XReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opDEY(AddrMode mode) {
@@ -334,9 +389,13 @@ void Instructions::opDEY(AddrMode mode) {
 
     if (m_cpu.YReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.YReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opEOR(AddrMode mode) {
@@ -345,9 +404,13 @@ void Instructions::opEOR(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opINC(AddrMode mode) {
@@ -357,9 +420,13 @@ void Instructions::opINC(AddrMode mode) {
 
     if (value == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (value & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     m_cpu.writeByte(adress, value);
 }
@@ -369,9 +436,13 @@ void Instructions::opINX(AddrMode mode) {
 
     if (m_cpu.XReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opINY(AddrMode mode) {
@@ -379,9 +450,13 @@ void Instructions::opINY(AddrMode mode) {
 
     if (m_cpu.YReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.YReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opJMP(AddrMode mode) {
@@ -393,7 +468,7 @@ void Instructions::opJSR(AddrMode mode) {
     auto adress = fetchArgumentadress(mode);
 
     m_cpu.pushWord(m_cpu.pc + 2);
-    m_cpu.pc = adress + 1;
+    m_cpu.pc = adress;
 }
 
 void Instructions::opLDA(AddrMode mode) {
@@ -401,9 +476,13 @@ void Instructions::opLDA(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opLDX(AddrMode mode) {
@@ -411,9 +490,13 @@ void Instructions::opLDX(AddrMode mode) {
 
     if (m_cpu.XReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opLDY(AddrMode mode) {
@@ -421,9 +504,13 @@ void Instructions::opLDY(AddrMode mode) {
 
     if (m_cpu.YReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.YReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opLSR(AddrMode mode) {
@@ -436,11 +523,16 @@ void Instructions::opLSR(AddrMode mode) {
             m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         m_cpu.AReg >>= 1;
+
         if (m_cpu.AReg == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.AReg & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     } else {
         auto adress = fetchArgumentadress(mode);
@@ -454,11 +546,16 @@ void Instructions::opLSR(AddrMode mode) {
             m_cpu.Statusreg.clear(StatusRegister::Carry);
 
         value >>= 1;
+
         if (value == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (value & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
         m_cpu.writeByte(adress, value);
     }
@@ -476,9 +573,13 @@ void Instructions::opORA(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opPHA(AddrMode mode) {
@@ -494,9 +595,13 @@ void Instructions::opPLA(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opPLP(AddrMode mode) {
@@ -510,6 +615,8 @@ void Instructions::opROL(AddrMode mode) {
         m_cpu.AReg <<= 1;
         if (m_cpu.AReg == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
             m_cpu.AReg |= StatusRegister::Carry;
@@ -522,6 +629,8 @@ void Instructions::opROL(AddrMode mode) {
 
         if (m_cpu.AReg & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     } else {
         auto adress = fetchArgumentadress(mode);
@@ -529,8 +638,11 @@ void Instructions::opROL(AddrMode mode) {
         bool oldBitSeven = value & StatusRegister::Negative;
 
         value <<= 1;
+
         if (value == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
             value |= StatusRegister::Carry;
@@ -542,6 +654,8 @@ void Instructions::opROL(AddrMode mode) {
 
         if (value & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
         m_cpu.writeByte(adress, value);
     }
@@ -553,8 +667,11 @@ void Instructions::opROR(AddrMode mode) {
         bool oldBitZero = m_cpu.AReg & StatusRegister::Carry;
 
         m_cpu.AReg >>= 1;
+
         if (m_cpu.AReg == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
             m_cpu.AReg |= StatusRegister::Negative;
@@ -566,6 +683,8 @@ void Instructions::opROR(AddrMode mode) {
 
         if (m_cpu.AReg & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
     } else {
         auto adress = fetchArgumentadress(mode);
@@ -575,6 +694,8 @@ void Instructions::opROR(AddrMode mode) {
         value <<= 1;
         if (value == 0)
             m_cpu.Statusreg.set(StatusRegister::Zero);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Zero);
 
         if (m_cpu.Statusreg.isSet(StatusRegister::Carry))
             value |= StatusRegister::Negative;
@@ -586,6 +707,8 @@ void Instructions::opROR(AddrMode mode) {
 
         if (value & StatusRegister::Negative)
             m_cpu.Statusreg.set(StatusRegister::Negative);
+        else
+            m_cpu.Statusreg.clear(StatusRegister::Negative);
 
         m_cpu.writeByte(adress, value);
     }
@@ -598,7 +721,7 @@ void Instructions::opRTI(AddrMode mode) {
 
 void Instructions::opRTS(AddrMode mode) {
     auto adress = m_cpu.popWord();
-    m_cpu.pc = adress + 1;
+    m_cpu.pc = adress;
 }
 
 void Instructions::opSBC(AddrMode mode) {
@@ -614,8 +737,13 @@ void Instructions::opSBC(AddrMode mode) {
     }
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
+
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opSEC(AddrMode mode) {
@@ -650,9 +778,13 @@ void Instructions::opTAX(AddrMode mode) {
 
     if (m_cpu.XReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opTAY(AddrMode mode) {
@@ -660,9 +792,13 @@ void Instructions::opTAY(AddrMode mode) {
 
     if (m_cpu.YReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.YReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opTSX(AddrMode mode) {
@@ -670,9 +806,13 @@ void Instructions::opTSX(AddrMode mode) {
 
     if (m_cpu.XReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.XReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opTXA(AddrMode mode) {
@@ -680,9 +820,13 @@ void Instructions::opTXA(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 void Instructions::opTXS(AddrMode mode) {
@@ -694,9 +838,13 @@ void Instructions::opTYA(AddrMode mode) {
 
     if (m_cpu.AReg == 0)
         m_cpu.Statusreg.set(StatusRegister::Zero);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Zero);
 
     if (m_cpu.AReg & StatusRegister::Negative)
         m_cpu.Statusreg.set(StatusRegister::Negative);
+    else
+        m_cpu.Statusreg.clear(StatusRegister::Negative);
 }
 
 
