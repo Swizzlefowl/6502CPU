@@ -993,7 +993,7 @@ void cpu::execute(std::uint8_t opcode) {
             break;
         default:
             fmt::println("Unimplemented opcode!:{:0x}", opcode);
-            throw std::exception("more barbie then(than) ken it would seem");
+            throw std::exception("should fix it");
             break;
     }
 }
